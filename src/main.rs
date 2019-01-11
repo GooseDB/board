@@ -12,7 +12,6 @@ extern crate r2d2_diesel;
 extern crate r2d2_mysql;
 extern crate serde;
 
-//mod expanded;
 mod routes;
 mod schema;
 mod tables;
