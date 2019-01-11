@@ -1,0 +1,9 @@
+[development]
+address = "localhost"
+port = 7999
+keep_alive = 5
+log = "normal"
+limits = { forms = 32768 }
+
+[global.databases]
+mysql = { url = "mysql://root@localhost:3306/rusted_board" }
