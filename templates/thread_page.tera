@@ -1,0 +1,10 @@
+{% extends "base" %}
+{% block content %}
+    Thread "{{name}}". Created at {{ date }}<br>
+    <p>{{ content }}</p>
+    ---------------------------
+        {% for comment in comments %}
+           <p>{{comment.1}}</p><p>{{comment.0}}</p>
+           ---------------------------
+        {% endfor %}
+{% endblock content %}

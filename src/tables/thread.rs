@@ -27,22 +27,30 @@ impl Thread {
     pub fn bump(&self) -> i32 {
         self.bump
     }
+    pub fn title(self) -> String {
+        self.title
+    }
+    pub fn date(&self) -> NaiveDateTime {
+        self.created_at
+    }
 }
 
 impl Thread {
     pub fn by_forum(conn: &MysqlConnection, forum_id: i32) -> Vec<Thread> {
-        use crate::schema::threads::dsl::*;
-        threads
-            .filter(forum_id.eq(forum_id))
+        use crate::schema::threads;
+        threads::dsl::threads
+            .filter(threads::forum_id.eq(forum_id))
+            .order_by(threads::position.asc())
             .load::<Thread>(conn)
             .expect("Oh no..")
     }
-    pub fn by_id(conn: &MysqlConnection, thread_id: i32) -> QueryResult<Vec<Thread>> {
+    pub fn by_id(conn: &MysqlConnection, thread_id: i32) -> Vec<Thread> {
         use crate::schema::threads::dsl::*;
         threads
             .filter(id.eq(thread_id))
             .limit(1)
             .load::<Thread>(conn)
+            .expect("Oh no..")
     }
     pub fn lower_all(conn: &MysqlConnection) -> QueryResult<usize> {
         diesel::update(threads::table)
@@ -70,9 +78,9 @@ impl NewThread {
         conn.transaction::<_, Error, _>(|| {
             Thread::lower_all(conn)?;
             create_thread.execute(conn)?;
-            let forum = Forum::by_id(conn, new_thread.forum_id)?
+            let forum = Forum::by_id(conn, new_thread.forum_id)
                 .pop()
-                .expect("No such forum");
+                .expect("There is no such forum");
             match forum.cur_threads_number().cmp(&forum.max_threads_number()) {
                 Ordering::Equal => diesel::delete(threads::table)
                     .filter(threads::position.gt(forum.max_threads_number()))

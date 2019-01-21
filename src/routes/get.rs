@@ -1,10 +1,15 @@
-use crate::routes::{ForumPage, HomePage, ThreadPage};
+use crate::routes::{CategoryPage, ForumPage, HomePage, ThreadPage};
 use crate::DBConn;
 use rocket_contrib::templates::Template;
 
 #[get("/")]
 pub fn homepage(conn: DBConn) -> Template {
     HomePage::build(&conn.0)
+}
+
+#[get("/category/<id>")]
+pub fn categorypage(conn: DBConn, id: i32) -> Template {
+    CategoryPage::build(&conn.0, id)
 }
 
 #[get("/forum/<id>")]

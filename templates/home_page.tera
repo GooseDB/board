@@ -1,0 +1,10 @@
+{% extends "base" %}
+{% block content %}
+    Hello. You're welcome.
+    Categories:
+    <ul>
+        {% for category in categories %}
+            <li><a href="{{category.0}}">{{category.1}}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

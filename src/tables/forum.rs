@@ -14,6 +14,9 @@ impl Forum {
     pub fn id(&self) -> i32 {
         self.id
     }
+    pub fn name(self) -> String {
+        self.name
+    }
     pub fn max_threads_number(&self) -> i32 {
         self.max_threads_number
     }
@@ -24,14 +27,18 @@ impl Forum {
 
 impl Forum {
     pub fn by_category(conn: &MysqlConnection, category_id: i32) -> Vec<Forum> {
-        use crate::schema::forums::dsl::*;
-        forums
-            .filter(category_id.eq(category_id))
+        use crate::schema::forums;
+        forums::dsl::forums
+            .filter(forums::category_id.eq(category_id))
             .load::<Forum>(conn)
             .expect("Oh no..")
     }
-    pub fn by_id(conn: &MysqlConnection, id: i32) -> QueryResult<Vec<Forum>> {
-        use crate::schema::forums::dsl::*;
-        forums.filter(id.eq(id)).limit(1).load::<Forum>(conn)
+    pub fn by_id(conn: &MysqlConnection, id: i32) -> Vec<Forum> {
+        use crate::schema::forums;
+        forums::dsl::forums
+            .filter(forums::id.eq(id))
+            .limit(1)
+            .load::<Forum>(conn)
+            .expect("Oh no..")
     }
 }

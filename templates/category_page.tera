@@ -1,0 +1,9 @@
+{% extends "base" %}
+{% block content %}
+    Category "{{category}}" has these forums:
+    <ul>
+        {% for forum in forums %}
+            <li><a href="{{forum.0}}">{{forum.1}}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

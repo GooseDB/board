@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <title> Rusted Board | {{ title }} </title>
+    {% endblock head %}
+</head>
+<body>
+    <div id="content">{% block content %}{% endblock content %}</div>
+    <div id="footer">
+        {% block footer %}
+            Кек(c)
+        {% endblock footer %}
+    </div>
+</body>
+</html>

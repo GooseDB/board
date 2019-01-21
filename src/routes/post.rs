@@ -1,14 +1,14 @@
-use rocket::request::Form;
+use rocket::{request::Form, State};
 
 use crate::{
     tables::{NewComment, NewThread},
-    DBConn,
+    DBConn, Settings,
 };
 
 #[post("/comment", data = "<new_comment>")]
-pub fn comment(conn: DBConn, new_comment: Form<NewComment>) {
+pub fn comment(settings: State<Settings>, conn: DBConn, new_comment: Form<NewComment>) {
     let new_comment = new_comment.into_inner();
-    NewComment::create(&conn.0, new_comment);
+    NewComment::create(&conn.0, new_comment, settings.bump_limit());
 }
 
 #[post("/thread", data = "<new_thread>")]

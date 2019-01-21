@@ -1,0 +1,9 @@
+{% extends "base" %}
+{% block content %}
+    Forum "{{forum}}" has these threads:
+    <ul>
+        {% for thread in threads %}
+            <li><a href="{{thread.0}}">{{thread.1}}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
