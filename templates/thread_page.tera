@@ -7,4 +7,10 @@
            <p>{{comment.1}}</p><p>{{comment.0}}</p>
            ---------------------------
         {% endfor %}
+     <form action="/new_comment" method="post">
+        <p>Write you answer</p>
+        <p><textarea rows="10" cols="45" name="content"></textarea></p>
+        <input type="hidden" value="{{id}}" name="thread_id" />
+        <p><input type="submit" value="Answer"></p>
+     </form>
 {% endblock content %}

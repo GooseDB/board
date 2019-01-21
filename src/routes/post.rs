@@ -5,7 +5,7 @@ use crate::{
     DBConn, Settings,
 };
 
-#[post("/comment", data = "<new_comment>")]
+#[post("/new_comment", data = "<new_comment>")]
 pub fn comment(settings: State<Settings>, conn: DBConn, new_comment: Form<NewComment>) {
     let new_comment = new_comment.into_inner();
     NewComment::create(&conn.0, new_comment, settings.bump_limit());

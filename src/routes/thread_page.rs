@@ -11,6 +11,7 @@ type Date = String;
 pub struct ThreadPage {
     title: String,
     name: String,
+    id: i32,
     content: String,
     date: String,
     comments: Vec<(Content, Date)>,
@@ -29,6 +30,7 @@ impl ThreadPage {
                         "thread_page",
                         ThreadPage {
                             title: "Thread".into(),
+                            id: thread.id(),
                             date: format!("{}", thread.date()),
                             name: thread.title(),
                             content: match comments.next() {
